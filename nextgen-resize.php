@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name: NextGEN Resize.
-Plugin URI: http://designerfoo.com/custom-wordpress-development#contentstartshere
+Plugin URI: http://designerfoo.com/nextgen-resize-wordpress-plugin-to-resize-nextgen-gallery-images#menunav
 Description: A plugin mod to the ever popular plugin Nextgen gallery. This plugin resizes the images on the fly, as you upload them. This comes in handy if you or clients are uploading images that are oversize and hiRes.
 Version: 0.1b
 Author: Manoj Sachwani
