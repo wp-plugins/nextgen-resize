@@ -3,7 +3,7 @@
 Plugin Name: NextGEN Resize.
 Plugin URI: http://designerfoo.com/nextgen-resize-wordpress-plugin-to-resize-nextgen-gallery-images#menunav
 Description: A plugin mod to the ever popular plugin Nextgen gallery. This plugin resizes the images on the fly, as you upload them. This comes in handy if you or clients are uploading images that are oversize and hiRes.
-Version: 0.1b
+Version: 1.1b
 Author: Manoj Sachwani
 Author URI: http://designerfoo.com
 */
@@ -101,10 +101,14 @@ if ( class_exists('nggLoader') ){
 					//echo "in_width";
 	   				$imageres->resizeToWidth($nggarray_options['px']);
 	   			}
-   				else
+   				elseif($nggarray_options['resizeby']="wandh")
    				{
-   					$imageres->resizeToHeight($nggarray_options['px']);
+   					$imageres->resize($nggarray_options['px'],$nggarray_options['pxh']);
    				}
+				else
+				{
+						$imageres->resizeToHeight($nggarray_options['px']);
+				}
    			
   				$resulted =	$imageres->save(ABSPATH.$results[0]->path."/".$image['filename']);
   			}
@@ -123,7 +127,7 @@ if ( class_exists('nggLoader') ){
 		{
 			$nggresize_options['resizeby']=$_POST['rezby'];
    	 		$nggresize_options['px']=$_POST['rezpix'];
-   	 		
+   	 		$nggresize_options['pxh']=$_POST['rezpixh'];
    			$nggresize_options['on']=$_POST['rezon'];
    			
    			
@@ -149,11 +153,12 @@ if ( class_exists('nggLoader') ){
 			<select name="rezon" id="rezon"><option value="yes" <?php if(preg_match('/yes/',$nggarray_options['on'])=='1') { ?> selected <?php } ?> >Yes</option><option value="no" <?php if(preg_match('/no/',$nggarray_options['on'])=='1') { ?> selected <?php } ?>>No</option></select><br/><br/>
 			
 			<label for="resizeby_op">Resize by</label>&nbsp;
-			<select name="rezby" id="rezby"><option value="width" <?php if(preg_match('/width/',$nggarray_options['resizeby'])=='1') { ?> selected <?php } ?> >Width</option><option value="height" <?php if(preg_match('/height/',$nggarray_options['resizeby'])=='1') { ?> selected <?php } ?>>Height</option></select><br/><br/>
+			<select name="rezby" id="rezby" ><option value="width" <?php if(preg_match('/width/',$nggarray_options['resizeby'])=='1') { ?> selected <?php } ?> >Width</option><option value="height" <?php if(preg_match('/height/',$nggarray_options['resizeby'])=='1') { ?> selected <?php } ?>>Height</option><option value="wandh" <?php if(preg_match('/wandh/',$nggarray_options['resizeby'])=='1') { ?> selected <?php } ?>>Width &amp; Height</option></select><br/><br/>
 			
-			<label for="">Pixels</label>&nbsp;
-			<input type="text" name="rezpix" id="rezpix" value="<?php echo $nggarray_options['px']; ?>"/><br/><br/>
-			
+			<label for="" id="widthpx"> Pixels</label>&nbsp;
+			<input type="text" name="rezpix" id="rezpix" value="<?php echo $nggarray_options['px']; ?>"/>[Becomes the width value when the option = Height &amp; Width.]<br/><br/>
+				<label for="">Height Pixels </label>&nbsp;
+				<input type="text" name="rezpixh" id="rezpixh" value="<?php echo $nggarray_options['pxh']; ?>"/>[Only works if the Height &amp; Width option is selected above]<br/><br/>
 			<input type="submit" name="rezsub" id="rezsub" value="Save Options"/>
 			
 		</div>
