@@ -4,7 +4,7 @@ Donate link: http://designerfoo.com/nextgen-resize-wordpress-plugin-to-resize-ne
 Tags: NextGEN, Gallery, posts, widgets, resize, NextGEN resize
 Requires at least: 2.8.0
 Tested up to: 2.9
-Stable tag: 0.1b
+Stable tag: 1.1b
 
 NextGEN Resize is plugin that resizes your pictures, photos while they upload, on the fly depending on the options set using the NextGEN Resize control panel screen. This plugin requires Alex Rabe's - NextGEN Gallery Plugin, without which the plugin simply will not work.
 
@@ -64,6 +64,7 @@ If you did like me to customize this plugin, [do ask](http://designerfoo.com/nex
 
 [Subscribe to the RSS feed](http://feeds.feedburner.com/Designerfoo) or [subscribe via Email](http://feedburner.google.com/fb/a/mailverify?uri=Designerfoo&loc=en_US), to know what other updates/plugins/themes I am releasing
 
+1.1b - Added the feature to specifically change the size of the images uploaded based on the height and width both, instead of just height or just width.
 
 
 
