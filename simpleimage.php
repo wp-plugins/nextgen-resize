@@ -18,7 +18,7 @@
 * http://www.gnu.org/licenses/gpl.html
 *
 */
- 
+ ini_set("memory_limit","90M");
 class SimpleImage {
    
    var $image;
