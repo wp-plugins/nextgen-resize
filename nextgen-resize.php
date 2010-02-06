@@ -3,7 +3,7 @@
 Plugin Name: NextGEN Resize.
 Plugin URI: http://designerfoo.com/nextgen-resize-wordpress-plugin-to-resize-nextgen-gallery-images#menunav
 Description: A plugin mod to the ever popular plugin Nextgen gallery. This plugin resizes the images on the fly, as you upload them. This comes in handy if you or clients are uploading images that are oversize and hiRes.
-Version: 1.1b
+Version: 1.2b
 Author: Manoj Sachwani
 Author URI: http://designerfoo.com
 */
@@ -61,6 +61,7 @@ if ( class_exists('nggLoader') ){
    	 $nggresize_options['resizeby']="width";
    	 $nggresize_options['px']="550";
    	 $nggresize_options['on']="yes";
+   	 $nggresize_options['pxh']="0";
 	 add_option("nggresizeoptions", $nggresize_options, 'Options to use in the pane.', 'yes');
    }
    
@@ -120,7 +121,7 @@ if ( class_exists('nggLoader') ){
      /*function that will display the options page*/
 	function options_panel() 
 	{ 
-	
+		$message="";
 		
 		//print_r($nggarray_options);
 		if(isset($_POST['rezsub']) && $_POST['rezsub'] == "Save Options")
