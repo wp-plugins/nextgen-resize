@@ -143,12 +143,12 @@ if ( class_exists('nggLoader') ){
 		<h2>Nextgen Resize - Control Panel</h2>
 		<h4>A plugin to auto reduce the size and dimensions of the every image uploaded.</h4>
 		<h4><a href="http://feeds.feedburner.com/Designerfoo" target="_blank">Subscribe to the RSS feed</a> or <a href="http://feedburner.google.com/fb/a/mailverify?uri=Designerfoo&loc=en_US" target="_blank">subscribe via Email</a>, to know what other updates/plugins/themes I am releasing</h4>
-		
+		<div style="position:relative;width:75%;float:left;clear:both;"><script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US"></script><script type="text/javascript">FB.init("c1a9395ecd2e5d09a614d234a3cad356");</script><fb:fan profile_id="304857902799" stream="0" connections="0" logobar="0" width="300"></fb:fan><div style="font-size:8px; padding-left:10px"><a href="http://www.facebook.com/pages/NextGEN-Resize/304857902799">NextGEN Resize</a> on Facebook</div></div><br/><Br/>
 		<?php if ($message) : ?>
 			<div id="message" class="updated fade"><p><?php echo $message; ?></p></div>
 		<?php endif; ?>
 		<form name="rezitboy" method="post" action=""/>
-		<div id="inputcontrols">
+		<div id="inputcontrols" style="clear:both;">
 			
 			<label for="resizeby_op">Resize Images?</label>&nbsp;
 			<select name="rezon" id="rezon"><option value="yes" <?php if(preg_match('/yes/',$nggarray_options['on'])=='1') { ?> selected <?php } ?> >Yes</option><option value="no" <?php if(preg_match('/no/',$nggarray_options['on'])=='1') { ?> selected <?php } ?>>No</option></select><br/><br/>
