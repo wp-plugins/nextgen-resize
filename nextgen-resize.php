@@ -223,7 +223,8 @@ if ( class_exists('nggLoader') ){
 		<input type="hidden" name="nonce-nextgenresize" value="<?php echo wp_create_nonce('nextgenresize-nonce'); ?>" />
 		</form><br/><br/>
 		<form action="" method="post">
-			<select name="folderresize" id="folderresize">
+			<h3><em>The images in the gallery selected will be resized based on the options set above!</em></h3>
+			Select a Gallery: &nbsp;<select name="folderresize" id="folderresize">
 				<option value="00">Select One</option>
 				<?php
 				global $wpdb;
