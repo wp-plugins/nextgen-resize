@@ -67,6 +67,8 @@ If you did like me to customize this plugin, [do ask](http://designerfoo.com/nex
 
 [Subscribe to the RSS feed](http://feeds.feedburner.com/Designerfoo) or [subscribe via Email](http://feedburner.google.com/fb/a/mailverify?uri=Designerfoo&loc=en_US), to know what other updates/plugins/themes I am releasing
 
+1.3b - Added a new feature to resize all images in a NextGen Gallery and fixed a lot of issues with some logic while resizing the images based on width and height and height only. A
+
 1.2b - fixed the allocated memory error for PHP and some small bug fixes. If you find any bugs please do inform. Thanks.
 
 1.1b - Added the feature to specifically change the size of the images uploaded based on the height and width both, instead of just height or just width.
