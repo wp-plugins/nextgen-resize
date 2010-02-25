@@ -3,7 +3,7 @@
 Plugin Name: NextGEN Resize.
 Plugin URI: http://designerfoo.com/nextgen-resize-wordpress-plugin-to-resize-nextgen-gallery-images#menunav
 Description: A plugin mod to the ever popular plugin Nextgen gallery. This plugin resizes the images on the fly, as you upload them. This comes in handy if you or clients are uploading images that are oversize and hiRes.
-Version: 1.2b
+Version: 1.3b
 Author: Manoj Sachwani
 Author URI: http://designerfoo.com
 */
@@ -47,8 +47,8 @@ if ( class_exists('nggLoader') ){
 		$file = __FILE__;
 		
 		
-		//add_management_page(__('All in One SEO Title', 'all_in_one_seo_pack'), __('All in One SEO', 'all_in_one_seo_pack'), 10, $file, array($this, 'management_panel'));
-		$subpage = add_submenu_page('nextgen-gallery', "Resize on Uploads", "Resize on Uploads", 10, $file, 'options_panel');
+		
+		$subpage = add_submenu_page('nextgen-gallery', "NextGen Resize Options", "NextGen Resize Options", 10, $file, 'options_panel');
 		
 	} //end of admin_menu()
 	
@@ -102,11 +102,11 @@ if ( class_exists('nggLoader') ){
 					//echo "in_width";
 	   				$imageres->resizeToWidth($nggarray_options['px']);
 	   			}
-   				elseif($nggarray_options['resizeby']="wandh")
+   				elseif($nggarray_options['resizeby']=="wandh")
    				{
    					$imageres->resize($nggarray_options['px'],$nggarray_options['pxh']);
    				}
-				else
+				elseif($nggarray_options['resizeby']=="height")
 				{
 						$imageres->resizeToHeight($nggarray_options['px']);
 				}
@@ -126,6 +126,8 @@ if ( class_exists('nggLoader') ){
 		//print_r($nggarray_options);
 		if(isset($_POST['rezsub']) && $_POST['rezsub'] == "Save Options")
 		{
+			$nonce = $_POST['nonce-nextgenresize'];
+			if (!wp_verify_nonce($nonce, 'nextgenresize-nonce')) die ( 'Security Check - If you receive this in error, log out and back in to WordPress');
 			$nggresize_options['resizeby']=$_POST['rezby'];
    	 		$nggresize_options['px']=$_POST['rezpix'];
    	 		$nggresize_options['pxh']=$_POST['rezpixh'];
@@ -136,6 +138,61 @@ if ( class_exists('nggLoader') ){
 			$message = "NextGEN Resize options updated.";
 			//print_r($nggresize_options);
 		}
+		
+		//resize all images in the folder selected.
+		if(isset($_POST['resizefoldersure']) && $_POST['resizefoldersure']=="1" && $_POST['folderresize']!="00")
+		{
+			$nonce = $_POST['nonce-nextgenresize'];
+			if (!wp_verify_nonce($nonce, 'nextgenresize-nonce')) die ( 'Security Check - If you receive this in error, log out and back in to WordPress');
+			$folderresize = $_POST['folderresize'];
+			$folderresize = str_ireplace("wp-content/","",$folderresize);
+			//echo $folderresize;
+			$folderresize = WP_CONTENT_DIR."/".$folderresize;
+			$nggarray_options = get_option("nggresizeoptions");
+			//echo $folderresize;
+			$handlerresize = opendir($folderresize);
+			while($file = readdir($handlerresize))
+			{
+				
+				if($file != "." && $file!=".." )
+				{
+					$extfile = substr($file,-3);
+					//echo $folderresize."/".$file;
+					if(is_file($folderresize."/".$file)==TRUE)
+					{
+						
+						if($nggarray_options['on']=="yes" && ($extfile == "jpg" || $extfile == "gif" || "$extfile" == "png" || $extfile=="bmp"))
+						{
+							$imageres = new SimpleImage();				
+							 @$imageres->load($folderresize."/".$file);
+							
+							//echo $nggarray_options['resizeby'];
+							echo $nggarray_options['px'];
+							if($nggarray_options['resizeby']=="width")
+							{
+								//echo "in_width";
+				   				$imageres->resizeToWidth($nggarray_options['px']);
+				   			}
+			   				elseif($nggarray_options['resizeby']=="wandh")
+			   				{
+								//echo "in_width";
+			   					$imageres->resize($nggarray_options['px'],$nggarray_options['pxh']);
+			   				}
+							elseif($nggarray_options['resizeby']=="height")
+							{
+									$imageres->resizeToHeight($nggarray_options['px']);
+							}
+
+			  				$resulted =	@$imageres->save($folderresize."/".$file);
+			  			}
+					}
+					
+				}
+			}
+			closedir($handlerresize);
+			$message="Gallery pictures resized!";
+			
+		}
 	//update_option("em_timezone",$_POST['em_timezone']); <?php if(preg_match('/none/',get_option("em_timezone"))=='1'){
 	$nggarray_options = get_option("nggresizeoptions");
 	?>
@@ -143,9 +200,9 @@ if ( class_exists('nggLoader') ){
 		<h2>Nextgen Resize - Control Panel</h2>
 		<h4>A plugin to auto reduce the size and dimensions of the every image uploaded.</h4>
 		<h4><a href="http://feeds.feedburner.com/Designerfoo" target="_blank">Subscribe to the RSS feed</a> or <a href="http://feedburner.google.com/fb/a/mailverify?uri=Designerfoo&loc=en_US" target="_blank">subscribe via Email</a>, to know what other updates/plugins/themes I am releasing</h4>
-		<div style="position:relative;width:75%;float:left;clear:both;"><script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US"></script><script type="text/javascript">FB.init("c1a9395ecd2e5d09a614d234a3cad356");</script><fb:fan profile_id="304857902799" stream="0" connections="0" logobar="0" width="300"></fb:fan><div style="font-size:8px; padding-left:10px"><a href="http://www.facebook.com/pages/NextGEN-Resize/304857902799">NextGEN Resize</a> on Facebook</div></div><br/><Br/>
+		<div style="position:relative;width:75%;float:left;clear:both;"><script type="text/javascript" src="http://static.ak.connect.facebook.com/js/api_lib/v0.4/FeatureLoader.js.php/en_US"></script><script type="text/javascript">FB.init("c1a9395ecd2e5d09a614d234a3cad356");</script><fb:fan profile_id="304857902799" stream="0" connections="0" logobar="0" width="300"></fb:fan><div style="font-size:8px; padding-left:10px"><a href="http://www.facebook.com/pages/NextGEN-Resize/304857902799">NextGEN Resize</a> on Facebook</div></div><br/><Br/><br/><br/>
 		<?php if ($message) : ?>
-			<div id="message" class="updated fade"><p><?php echo $message; ?></p></div>
+			<div id="message" class="updated fade" style="clear:both;"><p><?php echo $message; ?></p></div>
 		<?php endif; ?>
 		<form name="rezitboy" method="post" action=""/>
 		<div id="inputcontrols" style="clear:both;">
@@ -163,6 +220,28 @@ if ( class_exists('nggLoader') ){
 			<input type="submit" name="rezsub" id="rezsub" value="Save Options"/>
 			
 		</div>
+		<input type="hidden" name="nonce-nextgenresize" value="<?php echo wp_create_nonce('nextgenresize-nonce'); ?>" />
+		</form><br/><br/>
+		<form action="" method="post">
+			<select name="folderresize" id="folderresize">
+				<option value="00">Select One</option>
+				<?php
+				global $wpdb;
+				$table_name = $wpdb->prefix."ngg_gallery";
+				$sql = "select title, path from ".$table_name;
+				$results_list = $wpdb->get_results($sql);
+				foreach($results_list as $row)
+				{
+					?>
+					<option value="<?php echo $row->path; ?>"><?php echo $row->title; ?></option>
+					<?php
+				}
+				
+				?>
+			</select>&nbsp;&nbsp;
+			<input type="submit" name="submit" value="Resize all images in this gallery.">
+			<input type="hidden" name="resizefoldersure" id="resizefoldersure" value="1"/>
+			<input type="hidden" name="nonce-nextgenresize" value="<?php echo wp_create_nonce('nextgenresize-nonce'); ?>" />
 		</form>
 
 	<?php }
